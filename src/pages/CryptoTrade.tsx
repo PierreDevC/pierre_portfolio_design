@@ -2,8 +2,7 @@ import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { useNavigation } from '@/contexts/NavigationContext';
 import { useTranslation } from '@/hooks/useTranslation';
-import AnimatedHeader from "@/components/AnimatedHeader";
-import Footer from "@/components/Footer";
+import StairsHeader from "@/components/StairsHeader";
 import calendappVideo from "@/assets/cryptotrade.mp4";
 import calendapp1 from "@/assets/cryptotrade1.png";
 import calendapp2 from "@/assets/cryptotrade2.png";
@@ -63,7 +62,7 @@ const CryptoTrade = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <AnimatedHeader />
+      <StairsHeader />
       <div className="relative will-change-transform pt-[100px] md:pt-[80px]">
         {/* Main Content Section */}
         <section className="pt-24 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
@@ -280,8 +279,6 @@ const CryptoTrade = () => {
             </div>
           </div>
         </section>
-
-        <Footer />
       </div>
     </div>
   );

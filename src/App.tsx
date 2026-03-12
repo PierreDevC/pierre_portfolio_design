@@ -7,6 +7,7 @@ import { NavigationProvider } from "@/contexts/NavigationContext";
 import Index from "./pages/Index";
 import CalendApp from "./pages/CalendApp";
 import CryptoTrade from "./pages/CryptoTrade";
+import MortWise from "./pages/MortWise";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/calendapp" element={<CalendApp />} />
             <Route path="/cryptotrade" element={<CryptoTrade />} />
+            <Route path="/mortwise" element={<MortWise />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

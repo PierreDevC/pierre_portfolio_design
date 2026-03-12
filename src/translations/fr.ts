@@ -41,13 +41,21 @@ export const fr: TranslationKeys = {
     items: {
       calendapp: {
         title: "CalendApp",
-        category: "Application Web",
+        category: "Web Application",
         year: "2025",
+        shortDescription: "UNE APPROCHE MODERNE DE LA GESTION DE CALENDRIER AXÉE SUR LA SIMPLICITÉ —"
       },
       cryptotrade: {
         title: "CryptoTrade",
-        category: "Application Web",
+        category: "Web Application",
         year: "2025",
+        shortDescription: "UN SIMULATEUR D'ÉCHANGE CRYPTO SANS RISQUE AVEC DONNÉES EN TEMPS RÉEL —"
+      },
+      mortwise: {
+        title: "MortWise",
+        category: "Design de Page d'Accueil",
+        year: "2025",
+        shortDescription: "UNE PLATEFORME HYPOTHÉCAIRE IA CONÇUE POUR LA CLARTÉ ET LA CONFIANCE —"
       },
     },
     details: {

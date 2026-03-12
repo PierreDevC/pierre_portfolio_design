@@ -65,13 +65,24 @@ const PortfolioGrid = () => {
     };
   }, []);
 
-  const projects = [
+  const projects: Array<{
+    id: number;
+    video?: string;
+    image?: string;
+    title: string;
+    category: string;
+    year: string;
+    shortDescription: string;
+    projectUrl: string;
+    techStack: string[];
+  }> = [
     {
       id: 1,
       video: calendappVideo,
       title: t('projects.items.calendapp.title'),
       category: t('projects.items.calendapp.category'),
       year: t('projects.items.calendapp.year'),
+      shortDescription: t('projects.items.calendapp.shortDescription'),
       projectUrl: "/calendapp",
       techStack: ["SpringBoot", "Next.js", "PostgresSQL"]
     },
@@ -81,122 +92,62 @@ const PortfolioGrid = () => {
       title: t('projects.items.cryptotrade.title'),
       category: t('projects.items.cryptotrade.category'),
       year: t('projects.items.cryptotrade.year'),
+      shortDescription: t('projects.items.cryptotrade.shortDescription'),
       projectUrl: "/cryptotrade",
       techStack: ["PHP", "JavaScript", "MySQL"]
+    },
+    {
+      id: 3,
+      image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=800",
+      title: t('projects.items.mortwise.title'),
+      category: t('projects.items.mortwise.category'),
+      year: t('projects.items.mortwise.year'),
+      shortDescription: t('projects.items.mortwise.shortDescription'),
+      projectUrl: "/mortwise",
+      techStack: ["React", "TypeScript", "AI/ML"]
     }
   ];
 
-
-
   const handleCardEnter = (projectId: number) => {
     setHoveredCard(projectId);
-    
-    // Find the card element and apply GSAP hover animation
-    const cardElement = cardRefs.current[projectId - 1];
-    if (cardElement) {
-      // Main card animation (inspired by button transform)
-      gsap.to(cardElement, {
-        y: -8,
-        scale: 1.02,
-        duration: 0.4,
-        ease: "power2.out"
-      });
-
-      // Find the image and apply additional effects
-      const imageElement = cardElement.querySelector('.portfolio-image');
-      if (imageElement) {
-        gsap.to(imageElement, {
-          scale: 1.08,
-          duration: 0.6,
-          ease: "power2.out"
-        });
-      }
-
-      // Add backdrop overlay effect (similar to button ::after)
-      const overlayElement = cardElement.querySelector('.portfolio-overlay');
-      if (overlayElement) {
-        gsap.to(overlayElement, {
-          opacity: 0.1,
-          scale: 1,
-          duration: 0.5,
-          ease: "power2.out"
-        });
-      }
-    }
   };
 
   const handleCardLeave = () => {
-    const previousCard = hoveredCard;
     setHoveredCard(null);
-    
-    // Reset animations when leaving
-    if (previousCard) {
-      const cardElement = cardRefs.current[previousCard - 1];
-      if (cardElement) {
-        // Reset main card
-        gsap.to(cardElement, {
-          y: 0,
-          scale: 1,
-          duration: 0.3,
-          ease: "power2.out"
-        });
-
-        // Reset image
-        const imageElement = cardElement.querySelector('.portfolio-image');
-        if (imageElement) {
-          gsap.to(imageElement, {
-            scale: 1,
-            duration: 0.4,
-            ease: "power2.out"
-          });
-        }
-
-        // Reset overlay
-        const overlayElement = cardElement.querySelector('.portfolio-overlay');
-        if (overlayElement) {
-          gsap.to(overlayElement, {
-            opacity: 0,
-            scale: 0.8,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        }
-      }
-    }
   };
 
   return (
     <motion.section 
       ref={sectionRef}
-      className="py-20"
+      className="py-32"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16 text-center">
+        <div className="mb-24">
           <motion.h1
             ref={titleRef}
-            className="text-4xl md:text-6xl lg:text-7xl font-light mb-6 text-foreground"
+            className="text-5xl md:text-7xl font-light mb-8 text-foreground"
             style={{ fontFamily: '"Geist", system-ui, -apple-system, sans-serif' }}
           >
             {t('projects.heading')}
           </motion.h1>
           <p
-            className="max-w-4xl mx-auto text-studio-gray leading-relaxed text-lg"
+            className="max-w-3xl text-studio-gray leading-relaxed text-xl"
             style={{ fontFamily: '"Geist", system-ui, -apple-system, sans-serif' }}
           >
             {t('projects.description')}
           </p>
         </div>
 
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20">
           {projects.map((project, index) => (
             <div
               key={project.id}
               ref={(el) => (cardRefs.current[index] = el)}
-              className="bg-gray-500/20 dark:bg-gray-700/30 rounded-3xl p-3 group hover:bg-black dark:hover:bg-white transition-all duration-500 ease-out relative cursor-pointer overflow-hidden"
+              className="group cursor-pointer"
               onMouseEnter={() => handleCardEnter(project.id)}
               onMouseLeave={handleCardLeave}
               onClick={() => {
@@ -207,144 +158,57 @@ const PortfolioGrid = () => {
                 }
               }}
             >
-              {/* Backdrop overlay element (similar to button ::after) */}
-              <div className="portfolio-overlay absolute inset-0 bg-white/10 backdrop-blur-sm rounded-3xl opacity-0 scale-75 pointer-events-none" />
-              
-              {/* Video Section */}
-              <div className="aspect-[4/3] overflow-hidden rounded-2xl mb-3 relative">
-                <video
-                  src={project.video}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="portfolio-image w-full h-full object-cover transition-transform duration-500"
-                >
-                  Your browser does not support the video tag.
-                </video>
+              {/* Media Container */}
+              <div className="media-container aspect-[1.2/1] rounded-[2rem] mb-8 overflow-hidden transition-all duration-500 relative">
+                 <div className="w-full h-full rounded-xl overflow-hidden shadow-sm relative">
+                    {project.image ? (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="portfolio-video w-full h-full object-cover"
+                      />
+                    ) : (
+                      <video
+                        src={project.video}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="portfolio-video w-full h-full object-cover"
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                 </div>
               </div>
               
-              {/* Content Section */}
-              <div className="px-3 py-2 relative overflow-hidden">
-                <div className="flex items-start justify-between">
-                  <motion.div
-                    className="space-y-1 flex-1"
-                    initial={{ opacity: 1 }}
-                    animate={{
-                      y: hoveredCard === project.id ? 0 : 0,
-                      opacity: 1
-                    }}
-                    transition={{
-                      duration: 0.4,
-                      ease: [0.25, 0.46, 0.45, 0.94]
-                    }}
-                  >
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 group-hover:text-white dark:group-hover:text-black transition-colors duration-500" style={{ fontFamily: '"Geist", system-ui, -apple-system, sans-serif' }}>
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-300 dark:group-hover:text-gray-700 transition-colors duration-500" style={{ fontFamily: '"Geist", system-ui, -apple-system, sans-serif' }}>
-                      {project.category}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-500 group-hover:text-gray-400 dark:group-hover:text-gray-600 transition-colors duration-500" style={{ fontFamily: '"Geist", system-ui, -apple-system, sans-serif' }}>
-                      {project.year}
-                    </p>
-                  </motion.div>
-
-                  {/* Smooth Animated Arrow */}
-                  <div className="relative ml-4 mt-1 w-6 h-6">
-                    <AnimatePresence mode="wait">
-                      {hoveredCard === project.id && (
-                        <motion.div
-                          className="absolute inset-0 cursor-pointer"
-                          initial={{
-                            opacity: 0,
-                            scale: 0.7,
-                            rotate: -45,
-                            x: -6,
-                            y: 6
-                          }}
-                          animate={{
-                            opacity: 1,
-                            scale: 1,
-                            rotate: 0,
-                            x: 0,
-                            y: 0
-                          }}
-                          exit={{
-                            opacity: 0,
-                            scale: 0.8,
-                            rotate: 45,
-                            x: 3,
-                            y: -3
-                          }}
-                          whileHover={{
-                            scale: 1.15,
-                            x: 2,
-                            y: -2,
-                            rotate: 5
-                          }}
-                          whileTap={{
-                            scale: 0.95
-                          }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 300,
-                            damping: 20,
-                            mass: 0.8
-                          }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (project.projectUrl.startsWith('/')) {
-                              navigate(project.projectUrl);
-                            } else {
-                              window.open(project.projectUrl, '_blank');
-                            }
-                          }}
-                        >
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            className="w-full h-full text-gray-700 dark:text-gray-300 group-hover:text-white dark:group-hover:text-black transition-colors duration-500"
-                          >
-                            <motion.path
-                              d="M7 17L17 7"
-                              initial={{ pathLength: 0 }}
-                              animate={{ pathLength: 1 }}
-                              transition={{ duration: 0.3, delay: 0.1 }}
-                            />
-                            <motion.path
-                              d="M7 7h10v10"
-                              initial={{ pathLength: 0 }}
-                              animate={{ pathLength: 1 }}
-                              transition={{ duration: 0.3, delay: 0.2 }}
-                            />
-                          </svg>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
+              {/* Content Section (Below the box) */}
+              <div className="space-y-6">
+                <div className="flex items-baseline justify-between">
+                  <h3 className="text-2xl font-semibold uppercase tracking-tight text-foreground" style={{ fontFamily: '"Geist", system-ui, -apple-system, sans-serif' }}>
+                    {project.title}
+                  </h3>
+                  <span className="text-sm font-medium text-studio-gray" style={{ fontFamily: '"Geist", system-ui, -apple-system, sans-serif' }}>
+                    04 / {project.year}
+                  </span>
                 </div>
-              {/* Tech Stack Pills */}
-              <div className="flex flex-wrap gap-1.5 justify-end">
-                {project.techStack.map((tech, techIndex) => (
-                  <div
-                    key={techIndex}
-                    className="bg-gray-200/80 dark:bg-gray-700/80 group-hover:bg-white/20 dark:group-hover:bg-black/20 text-gray-700 dark:text-gray-300 group-hover:text-white dark:group-hover:text-black text-xs px-2 py-1 rounded-xl transition-all duration-500"
-                    style={{
-                      fontFamily: '"Geist", system-ui, -apple-system, sans-serif',
-                      fontSize: '10px',
-                      height: '25px',
-                      display: 'flex',
-                      alignItems: 'center'
-                    }}
-                  >
-                    {tech}
-                  </div>
-                ))}
+
+                <div className="flex flex-wrap gap-2">
+                  {project.techStack.map((tech, techIndex) => (
+                    <span
+                      key={techIndex}
+                      className="bg-[#f0f0f0] dark:bg-[#252525] text-[#666] dark:text-[#aaa] text-[10px] px-4 py-1.5 rounded-full font-medium uppercase tracking-wider"
+                      style={{ fontFamily: '"Geist", system-ui, -apple-system, sans-serif' }}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="text-sm text-studio-gray leading-relaxed uppercase tracking-wide max-w-[90%]" style={{ fontFamily: '"Geist", system-ui, -apple-system, sans-serif' }}>
+                  {project.shortDescription}
+                </p>
               </div>
-            </div>
             </div>
           ))}
         </div>

@@ -41,11 +41,19 @@ export const en = {
         title: "CalendApp",
         category: "Web Application",
         year: "2025",
+        shortDescription: "A MODERN APPROACH TO CALENDAR MANAGEMENT FOCUSED ON SIMPLICITY —"
       },
       cryptotrade: {
         title: "CryptoTrade",
         category: "Web Application",
         year: "2025",
+        shortDescription: "A RISK-FREE CRYPTO EXCHANGE SIMULATOR WITH REAL-TIME MARKET DATA —"
+      },
+      mortwise: {
+        title: "MortWise",
+        category: "Landing Page Design",
+        year: "2025",
+        shortDescription: "AN AI-POWERED MORTGAGE PLATFORM DESIGNED FOR CLARITY AND TRUST —"
       },
     },
     details: {
